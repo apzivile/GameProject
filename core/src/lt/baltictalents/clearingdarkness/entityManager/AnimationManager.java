@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
-import lt.baltictalents.clearingdarkness.tools.CameraManager;
-
-import static lt.baltictalents.clearingdarkness.ShooterGame.HEIGHT;
-import static lt.baltictalents.clearingdarkness.ShooterGame.WIDTH;
+import lt.baltictalents.clearingdarkness.ShooterGame;
 
 public class AnimationManager {
-    private static final int SHIP_SPEED = 400;
+    private static final int PLAYER_SPEED = 800;
     private static final int FRAMES_COL = 2;
     private static final int FRAMES_ROW = 2;
 
@@ -21,11 +19,12 @@ public class AnimationManager {
     private Animation animation;
     private TextureRegion[] frames;
     private TextureRegion currentFrame;
+    private Vector2 velocity = new Vector2();
 
     private float stateTime;
 
 
-    AnimationManager(Sprite sprite) {
+    public AnimationManager(Sprite sprite) {
         this.sprite = sprite;
         Texture texture = sprite.getTexture();
         TextureRegion[][] temp = TextureRegion.split(texture, (int) getSpriteWidth(), texture.getHeight() / FRAMES_ROW);
@@ -60,38 +59,42 @@ public class AnimationManager {
         return sprite.getWidth() / FRAMES_COL;
     }
 
-//    public void moveRight() {
-//        velocity = new Vector2(SHIP_SPEED, 0);
-//    }
-//
-//    public void moveLeft() {
-//        velocity = new Vector2(-SHIP_SPEED, 0);
-//    }
+    public void moveRight() {
+        velocity = new Vector2(PLAYER_SPEED, 0);
+    }
+
+    public void moveLeft() {
+        velocity = new Vector2(-PLAYER_SPEED, 0);
+    }
+    public void dontMove(){
+        velocity = new Vector2(0, 0);
+    }
+
 
     public int getX() {
         return (int) (sprite.getX() + getSpriteCenterOffset());
     }
 
-//    public void move() {
-//        int xMovement = (int) (velocity.x * Gdx.graphics.getDeltaTime());
-//        int yMovement = (int) (velocity.y * Gdx.graphics.getDeltaTime());
-//        sprite.setPosition(sprite.getX() + xMovement, sprite.getY() + yMovement);
-//
-//        if (sprite.getX() < 0) {
-//            sprite.setX(0);
-//
-//        }
-//
-//        if (sprite.getX() + getSpriteWidth() > ShooterGame.VIEWPORT_WIDTH) {
-//            sprite.setX(ShooterGame.VIEWPORT_WIDTH - getSpriteWidth());
-//
-//        }
-//
-//    }
+    public void move() {
+        int xMovement = (int) (velocity.x * Gdx.graphics.getDeltaTime());
+        int yMovement = (int) (velocity.y * Gdx.graphics.getDeltaTime());
+        sprite.setPosition(sprite.getX() + xMovement, sprite.getY() + yMovement);
 
-//    public void setVelocity(Vector2 velocity) {
-//        this.velocity = velocity;
-//    }
+        if (sprite.getX() < 0) {
+            sprite.setX(0);
+
+        }
+
+        if (sprite.getX() + getSpriteWidth() > ShooterGame.WIDTH) {
+            sprite.setX(ShooterGame.WIDTH - getSpriteWidth());
+
+        }
+
+    }
+
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
 
     public int getY() {
         return (int) sprite.getY();
@@ -105,8 +108,8 @@ public class AnimationManager {
         return (int) sprite.getHeight() / FRAMES_ROW;
     }
 
-//    public void changeDirection() {
-//        velocity.x = -velocity.x;
-//    }
+    public void changeDirection() {
+        velocity.x = -velocity.x;
+    }
 
 }

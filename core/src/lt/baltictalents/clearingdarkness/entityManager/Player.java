@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import static lt.baltictalents.clearingdarkness.ShooterGame.HEIGHT;
 import static lt.baltictalents.clearingdarkness.ShooterGame.WIDTH;
 
 public class Player {
@@ -23,7 +24,7 @@ public class Player {
         playerTexture = new Texture(Gdx.files.internal("player_sprite_sheet.png"));
         playerSprite = new Sprite(playerTexture);
         playerAnimated = new AnimationManager(playerSprite);
-        playerAnimated.setPosition(WIDTH / 2, 0);
+        playerAnimated.setPosition(WIDTH / 2, HEIGHT/7);
 
     }
 
