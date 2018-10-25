@@ -29,7 +29,6 @@ public class Player {
     }
 
     public void draw(SpriteBatch batch) {
-//        batch.draw(playerAnimated);
         playerAnimated.draw(batch);
     }
 //

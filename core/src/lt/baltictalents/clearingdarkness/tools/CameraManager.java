@@ -14,13 +14,9 @@ import static lt.baltictalents.clearingdarkness.ShooterGame.WIDTH;
 public class CameraManager extends ApplicationAdapter {
     OrthographicCamera camera;
     StretchViewport viewport;
-//    Player player;
-//    AnimationManager animationManager;
-//    Sprite sprite;
 
     public CameraManager(int width, int height) {
         camera = new OrthographicCamera();
-//        player = new Player();
         camera.setToOrtho(false, WIDTH, HEIGHT);
         viewport = new StretchViewport(width, height, camera);
         viewport.apply();

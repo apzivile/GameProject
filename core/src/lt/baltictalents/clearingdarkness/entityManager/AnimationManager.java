@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import lt.baltictalents.clearingdarkness.ShooterGame;
 
 public class AnimationManager {
-    private static final int PLAYER_SPEED = 800;
+    private static final int PLAYER_SPEED = 700;
     private static final int FRAMES_COL = 2;
     private static final int FRAMES_ROW = 2;
 
@@ -60,13 +60,17 @@ public class AnimationManager {
     }
 
     public void moveRight() {
-        velocity = new Vector2(PLAYER_SPEED, 0);
+       velocity = new Vector2(PLAYER_SPEED, 0);
     }
 
     public void moveLeft() {
         velocity = new Vector2(-PLAYER_SPEED, 0);
     }
-    public void dontMove(){
+    public  void slowDown(){
+        velocity = new Vector2(PLAYER_SPEED/3,0);
+    }
+
+    public void dontMove() {
         velocity = new Vector2(0, 0);
     }
 
@@ -75,20 +79,33 @@ public class AnimationManager {
         return (int) (sprite.getX() + getSpriteCenterOffset());
     }
 
+//    public void noMove() {
+//        sprite.setPosition(0, 0);
+//
+//        if (sprite.getX() < 0) {
+//            sprite.setX(0);
+//        }
+//        velocity = new Vector2(0,0);
+//
+//    }
+
     public void move() {
         int xMovement = (int) (velocity.x * Gdx.graphics.getDeltaTime());
         int yMovement = (int) (velocity.y * Gdx.graphics.getDeltaTime());
         sprite.setPosition(sprite.getX() + xMovement, sprite.getY() + yMovement);
 
-        if (sprite.getX() < 0) {
+        if (sprite.getX() < 0)
             sprite.setX(0);
-
-        }
 
         if (sprite.getX() + getSpriteWidth() > ShooterGame.WIDTH) {
             sprite.setX(ShooterGame.WIDTH - getSpriteWidth());
-
         }
+//        if (moveLeft()){
+//               xMovement -= velocity.x * Gdx.graphics.getDeltaTime();
+//            if (xMovement < 0)
+//                xMovement =0;
+//
+//        }
 
     }
 
