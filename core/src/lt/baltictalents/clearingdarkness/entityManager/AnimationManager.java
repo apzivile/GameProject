@@ -66,9 +66,6 @@ public class AnimationManager {
     public void moveLeft() {
         velocity = new Vector2(-PLAYER_SPEED, 0);
     }
-    public  void slowDown(){
-        velocity = new Vector2(PLAYER_SPEED/3,0);
-    }
 
     public void dontMove() {
         velocity = new Vector2(0, 0);
