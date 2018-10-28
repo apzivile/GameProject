@@ -12,8 +12,8 @@ import lt.baltictalents.clearingdarkness.tools.Background;
 public class MenuScreen implements Screen {
     private static final int PLAY_BUTTON_WIDTH = 300;
     private static final int PLAY_BUTTON_HEIGHT = 120;
-    private static final int EXIT_BUTTON_WIDTH = 250;
-    private static final int EXIT_BUTTON_HEIGHT = 120;
+    private static final int EXIT_BUTTON_WIDTH = 200;
+    private static final int EXIT_BUTTON_HEIGHT = 80;
     private static final int PLAY_BUTTON_Y = 230;
     private static final int EXIT_BUTTON_Y = 100;
 
@@ -29,8 +29,8 @@ public class MenuScreen implements Screen {
 
         playButtonActive = new Texture("play_button_active.png");
         playButtonInactive = new Texture("play_button_inactive.png");
-        exitButtonActive = new Texture("play_button_active.png");
-        exitButtonInactive = new Texture("play_button_inactive.png");
+        exitButtonActive = new Texture("exit_button_active.png");
+        exitButtonInactive = new Texture("exit_button_inactive.png");
 
 
         game.background.setSpeedFixed(true);
