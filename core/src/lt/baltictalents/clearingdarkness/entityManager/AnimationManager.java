@@ -6,12 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import lt.baltictalents.clearingdarkness.ShooterGame;
 
 public class AnimationManager {
-    private static final int PLAYER_SPEED = 700;
+    private static final int PLAYER_SPEED = 700; //test/700
     private static final int FRAMES_COL = 2;
     private static final int FRAMES_ROW = 2;
 
@@ -22,6 +23,7 @@ public class AnimationManager {
     private Vector2 velocity = new Vector2();
 
     private float stateTime;
+    private boolean isDead = false;
 
 
     public AnimationManager(Sprite sprite) {
@@ -122,8 +124,15 @@ public class AnimationManager {
         return (int) sprite.getHeight() / FRAMES_ROW;
     }
 
-    public void changeDirection() {
-        velocity.x = -velocity.x;
+    public Rectangle getBoundingBox() {
+        return new Rectangle(sprite.getX(), sprite.getY(), getWidth(), getHeight());
     }
 
+    public void setDead(boolean isDead) {
+        this.isDead = isDead;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
 }

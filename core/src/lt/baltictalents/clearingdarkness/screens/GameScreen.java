@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import java.lang.reflect.WildcardType;
@@ -16,6 +17,7 @@ import lt.baltictalents.clearingdarkness.entityManager.AnimationManager;
 import lt.baltictalents.clearingdarkness.entityManager.Enemy;
 import lt.baltictalents.clearingdarkness.entityManager.Player;
 import lt.baltictalents.clearingdarkness.entityManager.ShotManager;
+import lt.baltictalents.clearingdarkness.tools.CollisionManager;
 
 import static lt.baltictalents.clearingdarkness.ShooterGame.HEIGHT;
 import static lt.baltictalents.clearingdarkness.ShooterGame.WIDTH;
@@ -40,6 +42,8 @@ public class GameScreen extends ApplicationAdapter implements Screen {
     Sprite playerSprite;
     AnimationManager playerAnimated;
     ShotManager shotManager;
+    CollisionManager collisionManager;
+    private boolean isGameOver = false;
 //    Player player;
 
     public GameScreen(final ShooterGame game) {
@@ -49,14 +53,14 @@ public class GameScreen extends ApplicationAdapter implements Screen {
 //        player = new Player();
         enemy = new Enemy();
         game.background.setSpeedFixed(false);
-//        shotButtonActive = new Texture(Gdx.files.internal("shot_button_active.png"));
-//        shotButtonInactive = new Texture(Gdx.files.internal("shot_button_inactive.png"));
+
         playerTexture = new Texture(Gdx.files.internal("player_sprite_sheet.png"));
         playerSprite = new Sprite(playerTexture);
         playerAnimated = new AnimationManager(playerSprite);
         playerAnimated.setPosition(WIDTH / 2, HEIGHT / 7);
         shotManager = new ShotManager();
 
+        collisionManager = new CollisionManager(playerAnimated,enemy,shotManager);
     }
 
     @Override
@@ -73,22 +77,41 @@ public class GameScreen extends ApplicationAdapter implements Screen {
 
         game.background.updateAndRender(delta, game.batch);
 
+        if (isGameOver) {
+            BitmapFont font = new BitmapFont();
+            font.getData().setScale(5);
+            font.draw(game.batch, "GAME OVER", 135, 700);
+        }
+
         playerAnimated.draw(game.batch);
         enemy.draw(game.batch);
         shotManager.draw(game.batch);
 //        enemy.shouldAppear();
         game.batch.end();
+
 //        enemy.shouldAppear();
         handleInput();
+
+        if (!isGameOver){
         playerAnimated.move();
         enemy.update();
         shotManager.update();
+        collisionManager.handleCollision();
+        }
+        if (playerAnimated.isDead()){
+            isGameOver = true;
+        }
 
     }
 
     private void handleInput() {
 
         if (Gdx.input.isTouched()) {
+            if (isGameOver) {
+                playerAnimated.setDead(false);
+                isGameOver = false;
+            }
+
             if (game.camera.getInputInGameWorld().x >= playerAnimated.getX())
                 playerAnimated.moveRight();
             else playerAnimated.moveLeft();
