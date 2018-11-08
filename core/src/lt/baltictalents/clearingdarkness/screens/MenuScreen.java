@@ -17,20 +17,27 @@ public class MenuScreen implements Screen {
     private static final int PLAY_BUTTON_Y = 230;
     private static final int EXIT_BUTTON_Y = 100;
 
-    final ShooterGame game;
+    private static final int LOGO_BUTTON_Y = 650;
+    private static final int LOGO_BUTTON_WIDTH = 600;
+    private static final int LOGO_BUTTON_HEIGHT = 480;
 
-    Texture playButtonActive;
-    Texture playButtonInactive;
-    Texture exitButtonActive;
-    Texture exitButtonInactive;
+    private final ShooterGame game;
+
+    private Texture logo;
+    private Texture playButtonActive;
+    private Texture playButtonInactive;
+    private Texture exitButtonActive;
+    private Texture exitButtonInactive;
 
     public MenuScreen(final ShooterGame game) {
         this.game = game;
 
-        playButtonActive = new Texture("play_button_active.png");
-        playButtonInactive = new Texture("play_button_inactive.png");
-        exitButtonActive = new Texture("exit_button_active.png");
-        exitButtonInactive = new Texture("exit_button_inactive.png");
+        logo = new Texture("logo.png");
+
+        playButtonActive = new Texture("play_button_active1.png");
+        playButtonInactive = new Texture("play_button_inactive1.png");
+        exitButtonActive = new Texture("exit_button_active1.png");
+        exitButtonInactive = new Texture("exit_button_inactive1.png");
 
 
         game.background.setSpeedFixed(true);
@@ -42,14 +49,12 @@ public class MenuScreen implements Screen {
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//                Exit button
                 int x = ShooterGame.WIDTH / 2 - EXIT_BUTTON_WIDTH / 2;
                 if (game.camera.getInputInGameWorld().x < x + EXIT_BUTTON_WIDTH && game.camera.getInputInGameWorld().x > x && ShooterGame.HEIGHT - game.camera.getInputInGameWorld().y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT && ShooterGame.HEIGHT - game.camera.getInputInGameWorld().y > EXIT_BUTTON_Y) {
                     menuScreen.dispose();
                     Gdx.app.exit();
                 }
 
-                //Play game button
                 x = ShooterGame.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
                 if (game.camera.getInputInGameWorld().x < x + PLAY_BUTTON_WIDTH && game.camera.getInputInGameWorld().x > x && ShooterGame.HEIGHT - game.camera.getInputInGameWorld().y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && ShooterGame.HEIGHT - game.camera.getInputInGameWorld().y > PLAY_BUTTON_Y) {
                     menuScreen.dispose();
@@ -83,13 +88,14 @@ public class MenuScreen implements Screen {
             game.batch.draw(exitButtonInactive, x, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         }
 
-         x = ShooterGame.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
+        x = ShooterGame.WIDTH / 2 - PLAY_BUTTON_WIDTH / 2;
         if (game.camera.getInputInGameWorld().x < x + PLAY_BUTTON_WIDTH && game.camera.getInputInGameWorld().x > x && ShooterGame.HEIGHT - game.camera.getInputInGameWorld().y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT && ShooterGame.HEIGHT - game.camera.getInputInGameWorld().y > PLAY_BUTTON_Y) {
             game.batch.draw(playButtonActive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-        }
-        else {
+        } else {
             game.batch.draw(playButtonInactive, x, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
         }
+        x = ShooterGame.WIDTH / 2 - LOGO_BUTTON_WIDTH / 2;
+        game.batch.draw(logo, x, LOGO_BUTTON_Y, LOGO_BUTTON_WIDTH, LOGO_BUTTON_HEIGHT);
 
         game.batch.end();
 
