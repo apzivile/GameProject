@@ -37,7 +37,7 @@ public class Enemy {
         Sprite enemySprite = new Sprite(enemyTexture);
         enemyAnimated = new AnimationManager(enemySprite);
         int xPosition = createRandomPosition();
-        enemyAnimated.setPosition(xPosition, ShooterGame.HEIGHT - enemyAnimated.getHeight()-50);
+        enemyAnimated.setPosition(xPosition, ShooterGame.HEIGHT - enemyAnimated.getHeight() - 50);
         enemyAnimated.setVelocity(new Vector2(ENEMY_SPEED, 0));
         enemies.add(enemyAnimated);
         enemyAnimated.setDead(false);
@@ -77,7 +77,7 @@ public class Enemy {
         while (i.hasNext()) {
             AnimationManager enemy = i.next();
             enemy.move();
-            if (enemy.getY() <0)
+            if (enemy.getY() < 0)
                 i.remove();
         }
     }
@@ -99,7 +99,7 @@ public class Enemy {
     public void hit() {
         enemyAnimated.setVelocity(new Vector2(0, ENEMY_SPEED));
         enemyAnimated.setDead(true);
-        score+=100;
+        score += 100;
         spawnTimeout = 2f;
 
     }

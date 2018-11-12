@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import lt.baltictalents.clearingdarkness.ShooterGame;
 
 public class AnimationManager {
-    private static final int PLAYER_SPEED = 700; //test/700
+    private static final int PLAYER_SPEED = 700;
     private static final int FRAMES_COL = 2;
     private static final int FRAMES_ROW = 2;
 

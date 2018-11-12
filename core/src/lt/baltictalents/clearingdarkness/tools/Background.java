@@ -16,7 +16,7 @@ public class Background {
     private float y1, y2;
     private int speed;
     private int goalSpeed;
-    private float backgroundScale;
+    private float starsScale;
     private boolean speedFixed;
 
     public Background() {
@@ -26,7 +26,7 @@ public class Background {
         y2 = stars.getHeight();
         speed = 0;
         goalSpeed = DEFAULT_SPEED;
-        backgroundScale = ShooterGame.WIDTH / stars.getWidth();
+        starsScale = ShooterGame.WIDTH / stars.getWidth();
         speedFixed = true;
     }
 
@@ -47,15 +47,15 @@ public class Background {
         y1 -= speed * deltaTime;
         y2 -= speed * deltaTime;
 
-        if (y1 + stars.getHeight() * backgroundScale <= 0)
-            y1 = y2 + stars.getHeight() * backgroundScale;
+        if (y1 + stars.getHeight() * starsScale <= 0)
+            y1 = y2 + stars.getHeight() * starsScale;
 
-        if (y2 + stars.getHeight() * backgroundScale <= 0)
-            y2 = y1 + stars.getHeight() * backgroundScale;
+        if (y2 + stars.getHeight() * starsScale <= 0)
+            y2 = y1 + stars.getHeight() * starsScale;
 
         batch.draw(background, 0, 0);
-        batch.draw(stars, 0, y1, ShooterGame.WIDTH, stars.getHeight() * backgroundScale);
-        batch.draw(stars, 0, y2, ShooterGame.WIDTH, stars.getHeight() * backgroundScale);
+        batch.draw(stars, 0, y1, ShooterGame.WIDTH, stars.getHeight() * starsScale);
+        batch.draw(stars, 0, y2, ShooterGame.WIDTH, stars.getHeight() * starsScale);
     }
 
     public void setSpeed(int goalSpeed) {

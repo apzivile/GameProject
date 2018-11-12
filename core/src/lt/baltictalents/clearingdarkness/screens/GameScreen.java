@@ -19,12 +19,9 @@ import lt.baltictalents.clearingdarkness.tools.CollisionManager;
 import static lt.baltictalents.clearingdarkness.ShooterGame.HEIGHT;
 import static lt.baltictalents.clearingdarkness.ShooterGame.WIDTH;
 
-//vibration
-
 public class GameScreen extends ApplicationAdapter implements Screen {
 
     private ShooterGame game;
-    //    Player player;
     private Enemy enemy;
     private Asteroid asteroid;
     private AnimationManager playerAnimated;
@@ -32,18 +29,11 @@ public class GameScreen extends ApplicationAdapter implements Screen {
     private CollisionManager collisionManager;
 
     private BitmapFont scoreFont;
-//    ArrayList<Enemy> enemies;
-//    Player player;
 
     GameScreen(final ShooterGame game) {
         this.game = game;
-//        player = new Player();
-
         asteroid = new Asteroid();
-        game.background.setSpeedFixed(false);
-
         scoreFont = new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
-
         Texture playerTexture = new Texture(Gdx.files.internal("player_sprite_sheet.png"));
         Sprite playerSprite = new Sprite(playerTexture);
         playerAnimated = new AnimationManager(playerSprite);
@@ -51,6 +41,7 @@ public class GameScreen extends ApplicationAdapter implements Screen {
         shotManager = new ShotManager();
         enemy = new Enemy(shotManager);
         collisionManager = new CollisionManager(playerAnimated, enemy, asteroid, shotManager);
+        game.background.setSpeedFixed(false);
     }
 
     @Override
@@ -62,14 +53,9 @@ public class GameScreen extends ApplicationAdapter implements Screen {
     public void render(float delta) {
         if (!collisionManager.isAlive()) {
             this.dispose();
-            game.setScreen(new GameOverScreen(game,enemy.score));
+            game.setScreen(new GameOverScreen(game, enemy.score));
             return;
         }
-
-//        if  (collisionManager.handleEnemyShot()){
-//            score += 100;
-//        }
-
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
@@ -88,16 +74,11 @@ public class GameScreen extends ApplicationAdapter implements Screen {
         handleInput();
 
         if (collisionManager.isAlive()) {
-
-//            if  (collisionManager.handleEnemyShot()){
-//                score += 100;
-//            }
             playerAnimated.move();
             enemy.update();
             asteroid.update();
             shotManager.update();
             collisionManager.handleCollision();
-//            score += 100;
         }
     }
 
