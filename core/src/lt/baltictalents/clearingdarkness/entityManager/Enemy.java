@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import lt.baltictalents.clearingdarkness.ShooterGame;
@@ -19,10 +22,15 @@ public class Enemy {
     private final ShotManager shotManager;
     private float spawnTimeout = 0f;
 
+    public int score;
+
+    private List<AnimationManager> enemies = new ArrayList<AnimationManager>();
+
     public Enemy(ShotManager shotManager) {
         this.shotManager = shotManager;
         enemyTexture = new Texture(Gdx.files.internal("enemy_sprite_sheet.png"));
         spawn();
+        score = 0;
     }
 
     private void spawn() {
@@ -31,6 +39,7 @@ public class Enemy {
         int xPosition = createRandomPosition();
         enemyAnimated.setPosition(xPosition, ShooterGame.HEIGHT - enemyAnimated.getHeight()-50);
         enemyAnimated.setVelocity(new Vector2(ENEMY_SPEED, 0));
+        enemies.add(enemyAnimated);
         enemyAnimated.setDead(false);
 
     }
@@ -43,7 +52,9 @@ public class Enemy {
 
     public void draw(SpriteBatch batch) {
         if (!enemyAnimated.isDead())
-            enemyAnimated.draw(batch);
+            for (AnimationManager enemy : enemies) {
+                enemy.draw(batch);
+            }
 
     }
 
@@ -59,9 +70,16 @@ public class Enemy {
 
             if (shouldFire())
                 shotManager.fireEnemyShot(enemyAnimated.getX());
-            enemyAnimated.move();
+
         }
 
+        Iterator<AnimationManager> i = enemies.iterator();
+        while (i.hasNext()) {
+            AnimationManager enemy = i.next();
+            enemy.move();
+            if (enemy.getY() <0)
+                i.remove();
+        }
     }
 
     private boolean shouldFire() {
@@ -79,7 +97,9 @@ public class Enemy {
     }
 
     public void hit() {
+        enemyAnimated.setVelocity(new Vector2(0, ENEMY_SPEED));
         enemyAnimated.setDead(true);
+        score+=100;
         spawnTimeout = 2f;
 
     }

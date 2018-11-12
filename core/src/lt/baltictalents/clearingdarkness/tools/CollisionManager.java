@@ -69,6 +69,4 @@ public class CollisionManager {
     public boolean isAlive() {
         return health > 0;
     }
-
-
 }

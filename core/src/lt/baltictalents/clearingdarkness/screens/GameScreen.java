@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import lt.baltictalents.clearingdarkness.ShooterGame;
@@ -29,6 +31,8 @@ public class GameScreen extends ApplicationAdapter implements Screen {
     private ShotManager shotManager;
     private CollisionManager collisionManager;
 
+    private BitmapFont scoreFont;
+//    ArrayList<Enemy> enemies;
 //    Player player;
 
     GameScreen(final ShooterGame game) {
@@ -37,6 +41,8 @@ public class GameScreen extends ApplicationAdapter implements Screen {
 
         asteroid = new Asteroid();
         game.background.setSpeedFixed(false);
+
+        scoreFont = new BitmapFont(Gdx.files.internal("fonts/score.fnt"));
 
         Texture playerTexture = new Texture(Gdx.files.internal("player_sprite_sheet.png"));
         Sprite playerSprite = new Sprite(playerTexture);
@@ -56,14 +62,21 @@ public class GameScreen extends ApplicationAdapter implements Screen {
     public void render(float delta) {
         if (!collisionManager.isAlive()) {
             this.dispose();
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen(game,enemy.score));
             return;
         }
+
+//        if  (collisionManager.handleEnemyShot()){
+//            score += 100;
+//        }
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.batch.begin();
         game.background.updateAndRender(delta, game.batch);
+
+        GlyphLayout scoreLayout = new GlyphLayout(scoreFont, "" + enemy.score);
+        scoreFont.draw(game.batch, scoreLayout, ShooterGame.WIDTH / 2 - scoreLayout.width / 2, ShooterGame.HEIGHT - scoreLayout.height - 10);
 
         collisionManager.draw(game.batch);
         playerAnimated.draw(game.batch);
@@ -76,11 +89,15 @@ public class GameScreen extends ApplicationAdapter implements Screen {
 
         if (collisionManager.isAlive()) {
 
+//            if  (collisionManager.handleEnemyShot()){
+//                score += 100;
+//            }
             playerAnimated.move();
             enemy.update();
             asteroid.update();
             shotManager.update();
             collisionManager.handleCollision();
+//            score += 100;
         }
     }
 
