@@ -3,6 +3,7 @@ package lt.baltictalents.clearingdarkness.screens;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -29,6 +30,7 @@ public class GameScreen extends ApplicationAdapter implements Screen {
     private CollisionManager collisionManager;
 
     private BitmapFont scoreFont;
+    private Sound death = Gdx.audio.newSound(Gdx.files.internal("death.wav"));
 
     GameScreen(final ShooterGame game) {
         this.game = game;
@@ -52,6 +54,7 @@ public class GameScreen extends ApplicationAdapter implements Screen {
     @Override
     public void render(float delta) {
         if (!collisionManager.isAlive()) {
+            death.play();
             this.dispose();
             game.setScreen(new GameOverScreen(game, enemy.score));
             return;

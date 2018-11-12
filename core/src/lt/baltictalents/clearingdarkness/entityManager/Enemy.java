@@ -1,6 +1,7 @@
 package lt.baltictalents.clearingdarkness.entityManager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,7 @@ public class Enemy {
     public int score;
 
     private List<AnimationManager> enemies = new ArrayList<AnimationManager>();
+    private Sound enemy = Gdx.audio.newSound(Gdx.files.internal("enemy.wav"));
 
     public Enemy(ShotManager shotManager) {
         this.shotManager = shotManager;
@@ -98,6 +100,7 @@ public class Enemy {
 
     public void hit() {
         enemyAnimated.setVelocity(new Vector2(0, ENEMY_SPEED));
+        enemy.play();
         enemyAnimated.setDead(true);
         score += 100;
         spawnTimeout = 2f;

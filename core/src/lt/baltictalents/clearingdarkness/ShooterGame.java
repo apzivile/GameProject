@@ -1,6 +1,8 @@
 package lt.baltictalents.clearingdarkness;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import lt.baltictalents.clearingdarkness.screens.MenuScreen;
@@ -22,15 +24,16 @@ public class ShooterGame extends Game{
         camera = new CameraManager(WIDTH, HEIGHT);
 
         this.background = new Background();
-//        this.player = new Player();
         this.setScreen(new MenuScreen(this));
+        Music music = Gdx.audio.newMusic(Gdx.files.internal("background-music.mp3"));
+        music.setVolume(.25f);
+        music.setLooping(true);
+        music.play();
     }
 
     @Override
     public void render() {
         batch.setProjectionMatrix(camera.combined());
-//        camera.update(WIDTH,HEIGHT);
-//        camera.getInputInGameWorld();
         super.render();
     }
 

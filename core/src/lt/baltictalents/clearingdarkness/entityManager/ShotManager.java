@@ -1,6 +1,7 @@
 package lt.baltictalents.clearingdarkness.entityManager;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +25,7 @@ public class ShotManager {
     private Texture playerShotTexture;
     private List<AnimationManager> shots = new ArrayList<AnimationManager>();
     private List<AnimationManager> enemyShots = new ArrayList<AnimationManager>();
+    private Sound shot = Gdx.audio.newSound(Gdx.files.internal("shot.mp3"));
 
     public ShotManager() {
         playerShotTexture = new Texture(Gdx.files.internal("shot_sprite_sheet.png"));
@@ -39,6 +41,7 @@ public class ShotManager {
             newShotAnimated.setVelocity(new Vector2(0, SHOT_SPEED));
             shots.add(newShotAnimated);
             timeSinceLastShot = 0f;
+            shot.play();
         }
     }
 
