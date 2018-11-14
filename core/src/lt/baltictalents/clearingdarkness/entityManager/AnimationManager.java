@@ -111,7 +111,7 @@ public class AnimationManager {
     }
 
     public Rectangle getBoundingBox() {
-        return new Rectangle(sprite.getX(), sprite.getY(), getWidth(), getHeight());
+        return new Rectangle(sprite.getX(), sprite.getY(), getWidth()-50, getHeight()-50);
     }
 
     public void setDead(boolean isDead) {
